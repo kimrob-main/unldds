@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Package</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6">
+    <h1 class="text-2xl font-bold text-center mb-6">Track Your Package</h1>
+    <form id="tracking-form" class="space-y-4">
+      <div>
+        <label for="tracking-id" class="block text-sm font-medium text-gray-700">Enter Tracking ID:</label>
+        <input type="text" id="tracking-id" name="tracking-id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" required>
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Track Package</button>
+    </form>
+  </div>
+
+  <script type="module">
+    $(document).ready(function() {
+      // Handle the tracking form submission
+      $('#tracking-form').submit(function(event) {
+        event.preventDefault();
+
+        // Get the tracking ID entered by the user
+        const trackingId = $('#tracking-id').val();
+
+        if (trackingId) {
+          // Redirect to the status page with the tracking ID as a query parameter
+          window.location.href = `/status.html?packageId=${trackingId}`;
+        } else {
+          alert('Please enter a tracking ID.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

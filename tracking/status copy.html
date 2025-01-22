@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Form</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    $(document).ready(function() {
+      // Initialize Supabase
+      const supabaseUrl = 'https://snhnnxiztegmxnundhpc.supabase.co';
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNuaG5ueGl6dGVnbXhudW5kaHBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc1NjA4NjIsImV4cCI6MjA1MzEzNjg2Mn0.8alT-YG25VpEV5kv8dJI8mxuZQZMQSSYPYzO2eYBLCg';
+      const supabase = createClient(supabaseUrl, supabaseKey);
+
+      // Function to fetch package details and history
+      async function getPackageDetailsAndHistory() {
+        // Extract the packageId from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const packageId = urlParams.get('packageId');  // Get packageId from the URL
+
+        if (!packageId) {
+          console.error('No packageId found in URL.');
+          return;
+        }
+
+        try {
+          // Fetch the package details
+          const { data: packageData, error: packageError } = await supabase
+            .from('packages')  // Assuming you have a 'packages' table
+            .select('*')  // Get all details of the package
+            .eq('id', packageId);  // Match the packageId
+
+          if (packageError) throw packageError;
+
+          // Display the package details
+          if (packageData.length > 0) {
+            const packagee = packageData[0];
+            $('#tracking-id').text(`Your tracking ID: ${packagee.tracking_id}`);
+            $('#order-tracking').text(`Track the delivery of order #${packagee.tracking_id}`);
+          } else {
+            $('#tracking-id').text('Package not found.');
+            $('#order-tracking').text('No package details available.');
+          }
+
+          // Fetch the package history
+          const { data: historyData, error: historyError } = await supabase
+            .from('history')  // Assuming you have a 'history' table
+            .select('*')  // Get all history entries for the package
+            .eq('pid', packageId)  // Match the packageId
+            // .order('timestamp', { ascending: false });  // Order by timestamp
+
+          if (historyError) throw historyError;
+
+          // Display the order history
+          const historyList = $('#history-list');
+          historyList.empty();  // Clear any existing history
+
+          if (historyData.length > 0) {
+            historyData.forEach((entry) => {
+              historyList.append(`
+                <li class="mb-10 ms-6 text-primary-700 dark:text-primary-500">
+                  <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary-100 ring-8 ring-white dark:bg-primary-900 dark:ring-gray-800">
+                    <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
+                    </svg>
+                  </span>
+                  <h4 class="mb-0.5 font-semibold">${new Date(entry.timestamp).toLocaleString()}</h4>
+                  <p class="text-sm">${entry.description}</p>
+                </li>
+              `);
+            });
+          } else {
+            historyList.append('<li>No history available.</li>');
+          }
+        } catch (error) {
+          console.error('Error fetching package details or history:', error);
+        }
+      }
+
+      // Call the function to fetch the details and history when the page loads
+      getPackageDetailsAndHistory();
+    });
+  </script>
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-md mx-auto mt-10 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg">
+    <div class="flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2l4-4m7 2a9 9 0 11-18 0a9 9 0 0118 0z" />
+      </svg>
+      <p class="font-semibold">Thank you for booking!</p>
+    </div>
+    <p class="mt-2 text-sm">
+      We are working on it. You will be contacted via WhatsApp or call in a few minutes.
+    </p>
+    <p id="tracking-id" class="mt-4 font-semibold text-lg text-green-600"></p>
+  </div>
+
+  <!-- Tracking Section -->
+  <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+      <h2 id="order-tracking" class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Track the delivery of your order</h2>
+
+      <div class="mt-6 sm:mt-8 lg:flex lg:gap-8">
+        <div class="w-full divide-y divide-gray-200 overflow-hidden rounded-lg border border-gray-200 dark:divide-gray-700 dark:border-gray-700 lg:max-w-xl xl:max-w-2xl">
+          <div class="space-y-4 p-6">
+            <div class="flex items-center gap-6">
+              <a href="#" class="min-w-0 flex-1 font-medium text-gray-900 hover:underline dark:text-white">
+                PC system All in One APPLE iMac (2023) mqrq3ro/a, Apple M3, 24" Retina 4.5K, 8GB, SSD 256GB, 10-core GPU, macOS Sonoma, Blue, Keyboard layout INT
+              </a>
+            </div>
+
+            <div class="flex items-center justify-between gap-4">
+              <p class="text-sm font-normal text-gray-500 dark:text-gray-400"><span class="font-medium text-gray-900 dark:text-white">Product ID:</span> BJ8364850</p>
+              <div class="flex items-center justify-end gap-4">
+                <p class="text-base font-normal text-gray-900 dark:text-white">x1</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 grow sm:mt-8 lg:mt-0">
+          <div class="space-y-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Order history</h3>
+            <ol id="history-list" class="relative ms-3 border-s border-gray-200 dark:border-gray-700">
+              <!-- Order history will be dynamically added here -->
+            </ol>
+            <div class="gap-4 sm:flex sm:items-center">
+              <button type="button" class="w-full rounded-lg  border border-gray-200 bg-white px-5  py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white sm:w-auto">
+                View all history
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

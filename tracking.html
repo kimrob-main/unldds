@@ -29,6 +29,8 @@
   <!-- 
     - preload images
   -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
 </head>
 
 <body id="top">
@@ -37,7 +39,7 @@
     - #HEADER
   -->
 
-  <header class="header" data-header>
+  <header class="header active" data-header>
     <div class="container">
 
       <h1>
@@ -166,7 +168,14 @@
         - #NEWSLETTER
       -->
 
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
       <section class="section newsletter" aria-label="newsletter">
         <div class="container">
 
@@ -179,13 +188,30 @@
 
             <h2 class="h2 section-title">Enter <br>Tracking number</h2>
 
-            <form action="" class="newsletter-form">
-              <input type="email" name="email_address" placeholder="Enter Your #" aria-label="email"
+            <form action="" id="tracking-form" class="newsletter-form">
+              <input type="text" name="" id="tracking-id" placeholder="Enter Your #Tracking ID" aria-label="email"
                 class="email-field">
 
               <button type="submit" class="newsletter-btn">Track</button>
             </form>
-
+            <script type="module">
+              $(document).ready(function() {
+                // Handle the tracking form submission
+                $('#tracking-form').submit(function(event) {
+                  event.preventDefault();
+          
+                  // Get the tracking ID entered by the user
+                  const trackingId = $('#tracking-id').val();
+          
+                  if (trackingId) {
+                    // Redirect to the status page with the tracking ID as a query parameter
+                    window.location.href = `/tracking/status.html?packageId=${trackingId}`;
+                  } else {
+                    alert('Please enter a tracking ID.');
+                  }
+                });
+              });
+            </script>
           </div>
 
         </div>
@@ -195,87 +221,6 @@
         - #FEATURE
       -->
 
-      <section class="section feature" aria-label="feature">
-        <div class="container">
-
-          <div class="title-wrapper">
-
-            <div>
-              <p class="section-subtitle">Tracking info</p>
-
-              <h2 class="h2 section-title">#343334</h2>
-
-              <p class="section-text">
-                <!-- Lorem Ipsum is simply dummy text of the printing and typesetting industry the standard dummy text ever
-                since the when an
-                printer took. -->
-              </p>
-            </div>
-
-            <!-- <a href="#" class="btn">Read More</a> -->
-
-          </div>
-
-          <ul class="feature-list grid-list">
-
-            <li>
-              <div class="feature-card" style="--card-number: '01'">
-
-                <div class="card-icon">
-                  <!-- <img src="./assets/images/feature-icon-3.png" width="93" height="93" alt=""> -->
-                </div>
-
-                <h3 class="h3 card-title">Solutions and specialized</h3>
-
-                <p class="card-text">
-                  Our aim is to optimize and improve your supply chain so that we can give you the best service
-                </p>
-
-              
-
-              </div>
-            </li>
-
-            <li>
-              <div class="feature-card" style="--card-number: '02'">
-
-                <div class="card-icon">
-                  <!-- <img src="./assets/images/feature-icon-3.png" width="93" height="93" alt=""> -->
-                </div>
-
-                <h3 class="h3 card-title">Multiple warehouses</h3>
-
-                <p class="card-text">
-                  We provide multiple drop off and pickup locations so you don't have to worry. And you should not face
-                  any kind...
-                </p>
-
-
-              </div>
-            </li>
-
-            <li>
-              <div class="feature-card" style="--card-number: '03'">
-
-                <div class="card-icon">
-                  <!-- <img src="./assets/images/feature-icon-3.png" width="93" height="93" alt=""> -->
-                </div>
-
-                <h3 class="h3 card-title">Tracking made easy</h3>
-
-                <p class="card-text">
-                  A tracking number for the entire process. so that you can find the exact position. this process will
-                  help you
-                </p>
-
-
-              </div>
-            </li>
-
-          </ul>
-
-        </div>
-      </section>
 
 
     </article>
@@ -446,7 +391,7 @@
   <!-- 
     - custom js link
   -->
-  <script src="./assets/js/script.js" defer></script>
+  <script src="./assets/js/script2.js" defer></script>
 
   <!-- 
     - ionicon link

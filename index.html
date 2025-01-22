@@ -25,6 +25,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Rubik:wght@400;500;600;700&display=swap"
     rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
   <!-- 
     - preload images
@@ -41,7 +42,7 @@
     <div class="container">
 
       <h1>
-        <a href="#" class="logo">UN L.D.D.S</a>
+        <a href="#" class="logo">UNLogisticsVaultServices</a>
       </h1>
 
       <nav class="navbar" data-navbar>
@@ -56,17 +57,10 @@
 
         <ul class="navbar-list">
 
-          <li class="navbar-item">
-            <a href="#home" class="navbar-link" data-nav-link>
-              <span>Home</span>
-
-              <ion-icon name="chevron-forward"></ion-icon>
-            </a>
-          </li>
 
           <li class="navbar-item">
             <a href="#about" class="navbar-link" data-nav-link>
-              <span>About</span>
+              <span>About us</span>
 
               <ion-icon name="chevron-forward"></ion-icon>
             </a>
@@ -74,7 +68,7 @@
 
           <li class="navbar-item">
             <a href="#service" class="navbar-link" data-nav-link>
-              <span>Service</span>
+              <span>Services</span>
 
               <ion-icon name="chevron-forward"></ion-icon>
             </a>
@@ -82,15 +76,7 @@
 
           <li class="navbar-item">
             <a href="#blog" class="navbar-link" data-nav-link>
-              <span>Blog</span>
-
-              <ion-icon name="chevron-forward"></ion-icon>
-            </a>
-          </li>
-
-          <li class="navbar-item">
-            <a href="#" class="navbar-link" data-nav-link>
-              <span>Contact</span>
+              <span>Tracking</span>
 
               <ion-icon name="chevron-forward"></ion-icon>
             </a>
@@ -103,9 +89,9 @@
       <div class="header-contact">
 
         <div>
-          <p class="contact-label">Free Call In U.S.A</p>
+          <p class="contact-label">Call Us!</p>
 
-          <a href="tel:12345678910" class="contact-number">1 234 567 8910</a>
+          <a href="tel:12345678910" class="contact-number">+15392044776, +12028884080</a>
         </div>
 
         <div class="contact-icon">
@@ -141,14 +127,14 @@
           <div class="hero-content">
 
             <h2 class="h1 hero-title">
-              <span class="span">Your Ride</span> To Success
+              <span class="span">Powerful</span> Deliveries
             </h2>
 
             <p class="hero-text">
-              There are many variations of passages of worem Ipsum available, but the majority
+              Powered by the  powerful resources of the world.
             </p>
 
-            <a href="#" class="btn-outline">View Services</a>
+            <a href="#blog" class="btn-outline">Track Package</a>
 
             <img src="./assets/images/hero-shape.png" width="116" height="116" loading="lazy"
               class="hero-shape shape-1">
@@ -807,12 +793,30 @@
 
             <h2 class="h2 section-title">Enter <br>Tracking number</h2>
 
-            <form action="" class="newsletter-form">
-              <input type="email" name="email_address" placeholder="Enter Your #" aria-label="email"
+            <form action="" id="tracking-form" class="newsletter-form">
+              <input type="text" name="" id="tracking-id" placeholder="Enter Your #Tracking ID" aria-label="email"
                 class="email-field">
 
               <button type="submit" class="newsletter-btn">Track</button>
             </form>
+            <script type="module">
+              $(document).ready(function() {
+                // Handle the tracking form submission
+                $('#tracking-form').submit(function(event) {
+                  event.preventDefault();
+          
+                  // Get the tracking ID entered by the user
+                  const trackingId = $('#tracking-id').val();
+          
+                  if (trackingId) {
+                    // Redirect to the status page with the tracking ID as a query parameter
+                    window.location.href = `/tracking/status.html?packageId=${trackingId}`;
+                  } else {
+                    alert('Please enter a tracking ID.');
+                  }
+                });
+              });
+            </script>
 
           </div>
 
