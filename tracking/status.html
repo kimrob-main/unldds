@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Booking Form</title>
+  <title>Tracking Details</title>
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="module">
@@ -39,11 +39,16 @@
           if (packageData.length > 0) {
             const packagee = packageData[0];
             $('#tracking-id').text(`Your tracking ID: ${packagee.id}`);
-            $('#order-tracking').text(`Track the delivery of order #${packagee.id}`);
+            $('#order-tracking').text(`Track the delivery of order #L15C0871T291NS${packagee.id}`);
             $('#pd').text(`${packagee.description}`);
+
+            // Show success message
+            $('#status-message').removeClass('bg-red-100 text-red-700 border-red-400').addClass('bg-green-100 text-green-700 border-green-400');
+            $('#status-message-text').text('Tracking found successfully!');
           } else {
-            $('#tracking-id').text('Package not found.');
-            $('#order-tracking').text('No package details available.');
+            // Show error message
+            $('#status-message').removeClass('bg-green-100 text-green-700 border-green-400').addClass('bg-red-100 text-red-700 border-red-400');
+            $('#status-message-text').text('Package not found.');
           }
 
           // Fetch the package history
@@ -60,7 +65,8 @@
           historyList.empty();  // Clear any existing history
 
           if (historyData.length > 0) {
-            historyData.forEach((entry) => {
+          $('#thistory').show()
+          historyData.forEach((entry) => {
               historyList.append(`
                 <li class="mb-10 ms-6 text-primary-700 dark:text-primary-500">
                   <span class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary-100 ring-8 ring-white dark:bg-primary-900 dark:ring-gray-800">
@@ -87,21 +93,22 @@
   </script>
 </head>
 <body class="bg-gray-100 p-6">
-  <div class="max-w-md mx-auto mt-0 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg">
+  <!-- Status Message -->
+  <div id="status-message" class="max-w-md mx-auto mt-0 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg">
     <div class="flex items-center">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2l4-4m7 2a9 9 0 11-18 0a9 9 0 0118 0z" />
       </svg>
-      <p class="font-semibold">Tracking found successfully!</p>
+      <p id="status-message-text" class="font-semibold">
+      </p>
     </div>
-    <p class="mt-2 text-sm">
-        Please check the details of your Tracking below
-    </p>
-    <p  class="mt-4 font-semibold text-lg text-green-600"></p>
+    <p class="mt-2 text-sm">Please check the details of your available Tracking below</p>
   </div>
-<br>
+
+  <br>
+
   <!-- Tracking Section -->
-  <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+  <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16 hidden" id="thistory">
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
       <h2 id="order-tracking" class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Track the delivery of your order</h2>
 
@@ -109,15 +116,13 @@
         <div class="w-full divide-y divide-gray-200 overflow-hidden rounded-lg border border-gray-200 dark:divide-gray-700 dark:border-gray-700 lg:max-w-xl xl:max-w-2xl">
           <div class="space-y-4 p-6">
             <div class="flex items-center gap-6">
-              <a href="#" class="min-w-0 flex-1 font-medium text-gray-900 hover:underline dark:text-white" id="pd">
-              </a>
+              <a href="#" class="min-w-0 flex-1 font-medium text-gray-900 hover:underline dark:text-white" id="pd"></a>
             </div>
 
             <div class="flex items-center justify-between gap-4">
-              <p class="text-sm font-normal text-gray-500 dark:text-gray-400"><span class="font-medium text-gray-900 dark:text-white">Product ID:</span> BJ8364850</p>
-              <div class="flex items-center justify-end gap-4">
-                <!-- <p class="text-base font-normal text-gray-900 dark:text-white">x1</p> -->
-              </div>
+              <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                <span class="font-medium text-gray-900 dark:text-white">Consignment #: </span> UN-0441251LDVS
+              </p>
             </div>
           </div>
         </div>
@@ -129,7 +134,7 @@
               <!-- Order history will be dynamically added here -->
             </ol>
             <div class="gap-4 sm:flex sm:items-center">
-              <button type="button" class="w-full rounded-lg  border border-gray-200 bg-white px-5  py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white sm:w-auto">
+              <button type="button" class="w-full rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white sm:w-auto">
                 Contact Support
               </button>
             </div>

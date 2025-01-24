@@ -678,7 +678,6 @@
       <section class="section blog" aria-label="blog" id="blog">
         <div class="container">
 
-          <p class="section-subtitle">Track your package</p>
 
           <!-- <h2 class="h2 section-title">Recent news & events</h2> -->
 
@@ -791,32 +790,11 @@
 
           <div class="newsletter-content">
 
-            <h2 class="h2 section-title">Enter <br>Tracking number</h2>
-
-            <form action="" id="tracking-form" class="newsletter-form">
-              <input type="text" name="" id="tracking-id" placeholder="Enter Your #Tracking ID" aria-label="email"
-                class="email-field">
-
-              <button type="submit" class="newsletter-btn">Track</button>
-            </form>
-            <script type="module">
-              $(document).ready(function() {
-                // Handle the tracking form submission
-                $('#tracking-form').submit(function(event) {
-                  event.preventDefault();
-          
-                  // Get the tracking ID entered by the user
-                  const trackingId = $('#tracking-id').val();
-          
-                  if (trackingId) {
-                    // Redirect to the status page with the tracking ID as a query parameter
-                    window.location.href = `/tracking/status.html?packageId=${trackingId}`;
-                  } else {
-                    alert('Please enter a tracking ID.');
-                  }
-                });
-              });
-            </script>
+            <h2 class="h2 section-title">Track  <br>your packages now</h2>
+            <div action="" id="tracking-form" class="newsletter-form">
+              <br>
+              <a href="/tracking.html"><button  class="newsletter-btn">Track Package</button></a>
+            </div>
 
           </div>
 
