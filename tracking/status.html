@@ -19,7 +19,8 @@
       async function getPackageDetailsAndHistory() {
         // Extract the packageId from the URL
         const urlParams = new URLSearchParams(window.location.search);
-        const packageId = urlParams.get('packageId');  // Get packageId from the URL
+        let packageId = urlParams.get('packageId');  // Get packageId from the URL
+         packageId = packageId.replace(/\d+$/, '');  // Remove the last number(s)
 
         if (!packageId) {
           console.error('No packageId found in URL.');
